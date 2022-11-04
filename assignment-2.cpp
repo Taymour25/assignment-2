@@ -2,16 +2,21 @@
 #include"BigDecimalIntClass.h"
 using namespace std;
 
-class Bigreal:private BigDecimalInt
+class Bigreal:public BigDecimalInt
 {
-private:
+public:
     BigDecimalInt real;
     BigDecimalInt decm;
-public:
     Bigreal(string user_input);
-    BigReal ();
+    Bigreal ();
+    Bigreal (const Bigreal& other); 
     ~Bigreal();
 };
+
+Bigreal::Bigreal (const Bigreal& other){
+    this->real.number=other.real.number;
+    this->decm.number=other.decm.number;
+}
 
 Bigreal::Bigreal(string user_input)
 {
@@ -32,10 +37,9 @@ Bigreal::Bigreal(string user_input)
         decm.number+=user_input[i];
     }   
 }
-Bigreal::BigReal (){
+Bigreal::Bigreal (){
     real.number="0";
     decm.number="0";
-    return 0;
 }
 Bigreal::~Bigreal()
 {
@@ -46,4 +50,5 @@ int main(){
     cout<<"Add your number here : ";
     cin>>User_input;
     Bigreal b(User_input);
+    Bigreal c(b);
 }
