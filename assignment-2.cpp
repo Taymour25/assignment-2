@@ -1,5 +1,7 @@
 #include <iostream>
 #include"BigDecimalIntClass.h"
+#include<algorithm>
+#include<string>
 using namespace std;
 
 class Bigreal:public BigDecimalInt
@@ -9,9 +11,37 @@ public:
     BigDecimalInt decm;
     Bigreal(string user_input);
     Bigreal ();
-    Bigreal (const Bigreal& other); 
+    Bigreal (const Bigreal& other);
+    Bigreal& operator= ( Bigreal& other);
+    Bigreal (Bigreal&& other);
+    Bigreal& operator=(Bigreal&& other);
     ~Bigreal();
 };
+
+Bigreal& Bigreal::operator=(Bigreal&& other){
+    string *ptr1=&other.real.number;
+    string *ptr2=&other.decm.number;
+    this->real.number=other.real.number;
+    this->decm.number=other.decm.number;
+    ptr1=nullptr;
+    ptr2=nullptr;
+    return *this;
+}
+
+Bigreal::Bigreal(Bigreal&& other){
+    string *ptr1=&other.real.number;
+    string *ptr2=&other.decm.number;
+    this->real.number=other.real.number;
+    this->decm.number=other.decm.number;
+    ptr1=nullptr;
+    ptr2=nullptr;
+}
+
+Bigreal& Bigreal::operator=( Bigreal& other){
+    this->real.number=other.real.number;
+    this->decm.number=other.decm.number;
+    return *this;
+}
 
 Bigreal::Bigreal (const Bigreal& other){
     this->real.number=other.real.number;
@@ -50,5 +80,8 @@ int main(){
     cout<<"Add your number here : ";
     cin>>User_input;
     Bigreal b(User_input);
-    Bigreal c(b);
+    Bigreal c("12222.333");
+    c=b;
+    cout<<c.real.number;
+
 }
